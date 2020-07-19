@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "main": "app.js",
   "license": "MIT",
+  "engines": {
+    "npm": "6.x",
+    "node": "12.x"
+  },
   "scripts": {
     "dev": "ts-node-dev src/app.ts",
-    "build": "rm -rf dist && tsc && cp .env dist/ && cp firestore.json dist/ && cp package.json dist/",
+    "build": "rm -rf dist && tsc && cp package.json dist/",
     "start": "node dist/src/app.js",
     "fix-clock": "ntpdate ntp.ubuntu.com"
   },
