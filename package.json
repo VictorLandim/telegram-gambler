@@ -9,10 +9,10 @@
   },
   "scripts": {
     "dev": "ts-node-dev src/app.ts",
-    "build": "rm -rf dist && tsc && cp package.json dist/",
-    "start": "node dist/src/app.js",
-    "postinstall": "cd dist && npm i",
-    "fix-clock": "ntpdate ntp.ubuntu.com"
+    "build-tsc": "rm -rf dist && tsc && cp package.json dist/",
+    "fix-clock": "ntpdate ntp.ubuntu.com",
+    "start": "node src/app.js",
+    "push": "git subtree push --prefix dist heroku master"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
