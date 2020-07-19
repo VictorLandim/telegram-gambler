@@ -70,7 +70,7 @@ if (process.env.NODE_ENV === 'development') {
   const expressApp = express()
 
   expressApp.use(bot.webhookCallback('/secret-path'))
-  bot.telegram.setWebhook(`${process.env.APP_URL}:${port}/secret-path`)
+  bot.telegram.setWebhook(`${process.env.APP_URL}:8443/secret-path`)
 
   expressApp.get('/', (req, res) => {
     res.json({ status: "Mr. Schmuckle online." })
