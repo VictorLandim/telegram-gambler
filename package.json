@@ -9,17 +9,17 @@
   },
   "scripts": {
     "dev": "ts-node-dev src/app.ts",
-    "build": "rm -rf dist && tsc && cp package.json dist/ && cp node_modules/ dist/",
+    "build": "rm -rf dist && tsc && cp package.json dist/",
     "fix-clock": "ntpdate ntp.ubuntu.com",
     "start": "node src/app.js",
     "push": "git subtree push --prefix dist heroku master"
   },
   "devDependencies": {
-    "dotenv": "^8.2.0",
     "ts-node-dev": "^1.0.0-pre.52",
     "typescript": "^3.9.7"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
     "firebase-admin": "^9.0.0",
     "telegraf": "^3.38.0",
     "telegraf-inline-menu": "^5.0.0"
