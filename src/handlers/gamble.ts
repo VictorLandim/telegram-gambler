@@ -33,6 +33,9 @@ const handleGamble = (db: Firestore) =>
         const chatId = String(ctx.chat.id)
         const userId = String(ctx.from.id)
 
+        const houseRef = db.collection(chatId).doc('house')
+        const foundHouse = await houseRef.get()
+
         const userRef = db.collection(chatId).doc(userId)
         const foundUser = await userRef.get()
 
@@ -65,13 +68,49 @@ const handleGamble = (db: Firestore) =>
             ? 0
             : updatedPoints
 
-          userRef.set({ ...ctx.from, points: updatedPoints })
+          const userRoll = (foundUser.data()?.rolls?.[diceVal] ?? 0) + 1;
+
+          let userLost = (foundUser.data()?.lost ?? 0)
+          let userWon = (foundUser.data()?.won ?? 0)
+          let housePoints = (foundHouse?.data()?.points ?? 0)
+
+          if (updatedPoints > points) {
+            const wonVal = updatedPoints - points
+
+            userWon += wonVal
+            housePoints -= wonVal
+          } else if (updatedPoints < points) {
+            const lostVal = points - updatedPoints
+
+            userLost += lostVal
+            housePoints += lostVal
+          }
+
+          userRef.set({
+            ...ctx.from,
+            points: updatedPoints,
+            rolls: {
+              ...foundUser.data().rolls,
+              [diceVal]: userRoll
+            },
+            lost: userLost,
+            won: userWon,
+          })
+
+          houseRef.set({
+            ...foundHouse.data(),
+            first_name: 'Mr.',
+            last_name: "Schmuckle",
+            is_bot: true,
+            language_code: 'en',
+            points: housePoints
+          })
 
           const pointMessage = updatedPoints > points
             ? `You won ${updatedPoints - points} schmuckle${updatedPoints - points > 1 ? 's' : ''}!`
             : `You lost ${points - updatedPoints} schmuckle${points - updatedPoints > 1 ? 's' : ''}!`
 
-          ctx.reply(`${pointMessage}\nYour now have: ${updatedPoints} schmuckles`)
+          ctx.reply(`${pointMessage}\nYour now have: ${updatedPoints} schmuckles.`)
         } else {
           ctx.reply("You can't gamble more schmuckles than you have.")
         }
