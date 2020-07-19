@@ -58,4 +58,17 @@ bot.on('message', handleMessage(db))
 // bot.use(menuMiddleware)
 // ============= TESTING MENU STUFF
 
-bot.launch()
+if (process.env.NODE_ENV === 'development') {
+  console.log("🎲 Mr. Schmuckle running on development.")
+  bot.launch()
+
+} else if (process.env.NODE_ENV === 'production') {
+  const port = process.env.PORT || 5000
+  console.log(`🎲 Mr. Schmuckle running on production on port ${port}.`)
+  require('http')
+    .createServer(bot.webhookCallback('/telegram'))
+    .listen(port)
+
+} else {
+  console.log("process.env.NODE_ENV missing or invalid.")
+}
