@@ -65,6 +65,7 @@ if (process.env.NODE_ENV === 'development') {
 } else if (process.env.NODE_ENV === 'production') {
   const port = process.env.PORT || 5000
   console.log(`🎲 Mr. Schmuckle running on production on port ${port}.`)
+
   require('http')
     .createServer(bot.webhookCallback('/telegram'))
     .listen(port)
