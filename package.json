@@ -15,11 +15,13 @@
     "push": "git subtree push --prefix dist heroku master"
   },
   "devDependencies": {
+    "@types/express": "^4.17.7",
     "ts-node-dev": "^1.0.0-pre.52",
     "typescript": "^3.9.7"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
+    "express": "^4.17.1",
     "firebase-admin": "^9.0.0",
     "telegraf": "^3.38.0",
     "telegraf-inline-menu": "^5.0.0"

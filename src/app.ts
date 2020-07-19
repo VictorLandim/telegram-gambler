@@ -3,6 +3,8 @@ dotenv.config()
 
 import * as admin from 'firebase-admin'
 
+import express from 'express'
+
 const serviceAccount = {
   "type": process.env.FIREBASE_TYPE,
   "project_id": process.env.FIREBASE_PROJECT_ID,
@@ -64,11 +66,19 @@ if (process.env.NODE_ENV === 'development') {
 
 } else if (process.env.NODE_ENV === 'production') {
   const port = process.env.PORT || 5000
-  console.log(`🎲 Mr. Schmuckle running on production on port ${port}.`)
 
-  require('http')
-    .createServer(bot.webhookCallback('/telegram'))
-    .listen(port)
+  const expressApp = express()
+
+  expressApp.use(bot.webhookCallback('/secret-path'))
+  bot.telegram.setWebhook(`${process.env.APP_URL}:${port}/secret-path`)
+
+  expressApp.get('/', (req, res) => {
+    res.json({ status: "Mr. Schmuckle online." })
+  })
+
+  expressApp.listen(port, () => {
+    console.log(`🎲 Mr. Schmuckle running on production on port ${port}.`)
+  })
 
 } else {
   console.log("process.env.NODE_ENV missing or invalid.")
