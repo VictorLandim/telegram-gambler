@@ -57,11 +57,8 @@ const handleGamble = (db: Firestore) =>
           const diceVal = dice.value.toString()
 
           const message = `${ctx.from.first_name} just rolled a beautiful ${diceVal}!`
-          await waitFor(3500)
 
           ctx.reply(message)
-
-          await waitFor(200)
 
           let updatedPoints = (points - pointsToGamble) + Math.floor(pointsToGamble * diceData[diceVal].mult)
           updatedPoints = updatedPoints < 0
