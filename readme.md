@@ -10,3 +10,6 @@ You should have both `.env` and `firestore.json` in your root directory. Create 
 
 # Bugs
 Sometimes my machine's clock goes out of sync from google's servers. Run `yarn fix-clock` to fix that.
+
+# Setting webhook url:
+`https://api.telegram.org/bot{my_bot_token}/setWebhook?url={url_to_send_updates_to}`
