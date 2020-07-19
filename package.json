@@ -9,9 +9,9 @@
   },
   "scripts": {
     "dev": "ts-node-dev src/app.ts",
-    "build": "rm -rf dist && tsc && cp package.json dist/",
+    "build": "rm -rf dist && tsc",
     "fix-clock": "ntpdate ntp.ubuntu.com",
-    "start": "node src/app.js",
+    "start": "node dist/app.js",
     "push": "git subtree push --prefix dist heroku master"
   },
   "devDependencies": {
