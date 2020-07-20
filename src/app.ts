@@ -2,8 +2,8 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 
 import * as admin from 'firebase-admin'
-
 import express from 'express'
+import * as fetch from 'node-fetch'
 
 const serviceAccount = {
   "type": process.env.FIREBASE_TYPE,
@@ -78,6 +78,7 @@ if (process.env.NODE_ENV === 'development') {
 
   expressApp.listen(port, () => {
     console.log(`🎲 Mr. Schmuckle running on production on port ${port}.`)
+    fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_KEY}/setWebhook?url=${process.env.APP_URL}/webhook`)
   })
 
 } else {
