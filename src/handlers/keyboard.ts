@@ -46,7 +46,6 @@ const handleGambleKeyboard = (db: Firestore) =>
       } else if (amount === 'go') {
         const gambleValue = message.text.split(':')[1]
 
-        console.log(ctx.callbackQuery)
         const newCtx = {
           ...ctx,
           from: ctx.callbackQuery.from,
