@@ -70,9 +70,6 @@ const handleGamble = (db: Firestore) =>
           const diceVal = dice.value.toString()
           console.log('Dice val: ' + diceVal)
 
-          if (diceVal === '1') ctx.replyWithPhoto({ url: 'https://images-eu.ssl-images-amazon.com/images/I/61ag-u3MWFL._SL500_AA300_.png', filename: "trollface" })
-          if (diceVal === '6') ctx.replyWithPhoto({ url: 'https://www.tnp.sg/sites/default/files/styles/rl480/public/articles/2016/01/03/agtsize020116.jpg?itok=4fQ5Ymb1', filename: "surprised" })
-
           let updatedPoints = (points - pointsToGamble) + Math.floor(pointsToGamble * diceData[diceVal].mult)
           updatedPoints = updatedPoints < 0
             ? 0
