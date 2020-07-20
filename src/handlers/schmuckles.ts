@@ -4,7 +4,6 @@ import { Firestore } from '@google-cloud/firestore'
 const handleScore = (db: Firestore) =>
   async (ctx: TelegrafContext): Promise<void> => {
     try {
-
       const chatId = String(ctx.chat.id)
       const userId = String(ctx.from.id)
 
@@ -18,6 +17,8 @@ const handleScore = (db: Firestore) =>
       const s = points === 1 ? '' : 's'
 
       ctx.reply(`You have ${points} schmuckle${s} in the pocket.`)
+
+      if (ctx.callbackQuery) ctx.editMessageReplyMarkup()
     }
     catch (e) {
       console.log(e)

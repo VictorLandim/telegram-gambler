@@ -5,21 +5,27 @@ import { Firestore } from '@google-cloud/firestore'
 const diceData = {
   1: {
     mult: 0.5,
+    text: 'an unfortunate 1️⃣'
   },
   2: {
     mult: 0.75,
+    text: 'a sad 2️⃣',
   },
   3: {
     mult: 0.9,
+    text: 'an almost good 3️⃣',
   },
   4: {
     mult: 1.1,
+    text: 'a safe 4️⃣'
   },
   5: {
     mult: 1.25,
+    text: 'a lucky 5️⃣'
   },
   6: {
     mult: 1.5,
+    text: 'a beautiful 6️⃣'
   },
 }
 
@@ -27,7 +33,6 @@ const containsValue = (text) => !!Number(text.split(' ')[1]) || text.split(' ')[
 
 const handleGamble = (db: Firestore) =>
   async (ctx: TelegrafContext): Promise<void> => {
-
     if (containsValue(ctx.message.text)) {
       try {
         const chatId = String(ctx.chat.id)
@@ -51,15 +56,19 @@ const handleGamble = (db: Firestore) =>
           ctx.reply('Invalid amount!')
         }
         else if (pointsToGamble <= points) {
-          if (pointsToGamble === points) ctx.reply('Going all in!')
+          const allInMessage = pointsToGamble === points
+            ? '\nGoing all in!'
+            : '';
+
+          ctx.reply(`${ctx.from.first_name} gambles ${pointsToGamble} schmuckles.${allInMessage}`)
 
           const { dice } = await ctx.replyWithDice()
+          ctx.replyWithChatAction('record_video')
+
+          await waitFor(3500)
+
           const diceVal = dice.value.toString()
           console.log('Dice val: ' + diceVal)
-
-          const message = `${ctx.from.first_name} just rolled a beautiful ${diceVal}!`
-
-          ctx.reply(message)
 
           let updatedPoints = (points - pointsToGamble) + Math.floor(pointsToGamble * diceData[diceVal].mult)
           updatedPoints = updatedPoints < 0
@@ -104,11 +113,15 @@ const handleGamble = (db: Firestore) =>
             points: housePoints
           })
 
+          const diceMessage = `Rolled ${diceData[diceVal].text}!`
           const pointMessage = updatedPoints > points
-            ? `You won ${updatedPoints - points} schmuckle${updatedPoints - points > 1 ? 's' : ''}!`
-            : `You lost ${points - updatedPoints} schmuckle${points - updatedPoints > 1 ? 's' : ''}!`
+            ? `⬆ won ${updatedPoints - points} schmuckle${updatedPoints - points > 1 ? 's' : ''}!`
+            : updatedPoints < points
+              ? `⬇ lost ${points - updatedPoints} schmuckle${points - updatedPoints > 1 ? 's' : ''}!`
+              : '🏳 No win or loss here!'
+          const balanceMessage = `💰 Balance: ${updatedPoints} schmuckles.`
 
-          ctx.reply(`${pointMessage}\nYour now have: ${updatedPoints} schmuckles.`)
+          ctx.reply(`${diceMessage} \n${pointMessage} \n${balanceMessage} `)
         } else {
           ctx.reply("You can't gamble more schmuckles than you have.")
         }

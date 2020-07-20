@@ -34,16 +34,26 @@ import {
   handleMessage,
   handleRules,
   handleHelp,
-  handleLeaderboard
+  handleLeaderboard,
+  handleKeyboard,
+  handleGambleKeyboard,
 } from './handlers'
 
 bot.command('schmuckles', handleScore(db))
+bot.action('schmuckles', handleScore(db))
+
 bot.command('leaderboard', handleLeaderboard(db))
+bot.action('leaderboard', handleLeaderboard(db))
+
 bot.command('gamble', handleGamble(db))
+bot.hears(/gamble/i, handleKeyboard)
+bot.action(/gamble_/, handleGambleKeyboard(db))
+
 bot.command('rules', handleRules)
 bot.command('help', handleHelp)
 bot.hears(['schmuckle', 'schmuckles', 'Schmuckle', 'Schmuckles'], (ctx) => ctx.reply('Did I hear anyone say schmuckle?'))
 bot.on('message', handleMessage(db))
+
 
 // ============= TESTING MENU STUFF
 // import { MenuTemplate, MenuMiddleware } from 'telegraf-inline-menu'
@@ -61,8 +71,8 @@ bot.on('message', handleMessage(db))
 // ============= TESTING MENU STUFF
 
 if (process.env.NODE_ENV === 'development') {
-  console.log("🎲 Mr. Schmuckle running on development.")
   bot.launch()
+  console.log("🎲 Mr. Schmuckle running on development.")
 
 } else if (process.env.NODE_ENV === 'production') {
   const port = process.env.PORT || 5000
