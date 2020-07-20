@@ -12,24 +12,24 @@ const diceData = {
     text: 'a sad 2️⃣',
   },
   3: {
-    mult: 0.9,
+    mult: 0.875,
     text: 'an almost good 3️⃣',
   },
   4: {
-    mult: 1.1,
+    mult: 1.25,
     text: 'a safe 4️⃣'
   },
   5: {
-    mult: 1.25,
+    mult: 1.5,
     text: 'a lucky 5️⃣'
   },
   6: {
-    mult: 1.5,
+    mult: 2,
     text: 'a beautiful 6️⃣'
   },
 }
 
-const containsValue = (text) => !!Number(text.split(' ')[1]) || text.split(' ')[1]?.toLowerCase() === 'all'
+const containsValue = (text: string) => !!Number(text.split(' ')[1]) || text.split(' ')[1]?.toLowerCase() === 'all'
 
 const handleGamble = (db: Firestore) =>
   async (ctx: TelegrafContext): Promise<void> => {
