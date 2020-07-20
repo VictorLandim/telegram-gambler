@@ -46,7 +46,8 @@ bot.command('leaderboard', handleLeaderboard(db))
 bot.action('leaderboard', handleLeaderboard(db))
 
 bot.command('gamble', handleGamble(db))
-bot.hears(/gamble/i, handleKeyboard)
+// bot.hears(/gamble/i, handleKeyboard)
+bot.hears(/keyboard/i, handleKeyboard)
 bot.action(/gamble_/, handleGambleKeyboard(db))
 
 bot.command('rules', handleRules)

@@ -113,7 +113,7 @@ const handleGamble = (db: Firestore) =>
             points: housePoints
           })
 
-          const diceMessage = `Rolled ${diceData[diceVal].text}!`
+          const diceMessage = `${ctx.from.first_name} rolled ${diceData[diceVal].text}!`
           const pointMessage = updatedPoints > points
             ? `⬆ won ${updatedPoints - points} schmuckle${updatedPoints - points > 1 ? 's' : ''}!`
             : updatedPoints < points
