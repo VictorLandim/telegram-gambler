@@ -16,7 +16,7 @@ const handleScore = (db: Firestore) =>
 
       const s = points === 1 ? '' : 's'
 
-      ctx.reply(`You have ${points} schmuckle${s} in the pocket.`)
+      ctx.reply(`You have ${points} schmuckle${s} in the pocket.`, { reply_to_message_id: ctx.message.message_id })
 
       if (ctx.callbackQuery) ctx.editMessageReplyMarkup()
     }

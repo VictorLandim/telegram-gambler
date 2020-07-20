@@ -4,15 +4,15 @@ import { Firestore } from '@google-cloud/firestore'
 
 const diceData = {
   1: {
-    mult: 0.5,
+    mult: 0.25,
     text: 'an unfortunate 1️⃣'
   },
   2: {
-    mult: 0.75,
+    mult: 0.5,
     text: 'a sad 2️⃣',
   },
   3: {
-    mult: 0.875,
+    mult: 0.75,
     text: 'an almost good 3️⃣',
   },
   4: {
@@ -69,6 +69,9 @@ const handleGamble = (db: Firestore) =>
 
           const diceVal = dice.value.toString()
           console.log('Dice val: ' + diceVal)
+
+          if (diceVal === '1') ctx.replyWithPhoto({ url: 'https://images-eu.ssl-images-amazon.com/images/I/61ag-u3MWFL._SL500_AA300_.png', filename: "trollface" })
+          if (diceVal === '6') ctx.replyWithPhoto({ url: 'https://www.tnp.sg/sites/default/files/styles/rl480/public/articles/2016/01/03/agtsize020116.jpg?itok=4fQ5Ymb1', filename: "surprised" })
 
           let updatedPoints = (points - pointsToGamble) + Math.floor(pointsToGamble * diceData[diceVal].mult)
           updatedPoints = updatedPoints < 0
@@ -130,7 +133,7 @@ const handleGamble = (db: Firestore) =>
         console.log(e)
       }
     } else {
-      ctx.reply("Invalid roll, value missing \\.\nUsage: `\/roll [value]` ", { parse_mode: 'MarkdownV2' })
+      ctx.reply("Invalid roll, value missing \\.\nUsage: `\/gamble [value]` ", { parse_mode: 'MarkdownV2' })
     }
   }
 

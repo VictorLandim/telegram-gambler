@@ -5,9 +5,9 @@ const handleRules =
     ctx.reply(`
 Collect shmuckles and gamble them!
 Dice multipliers:
-(1): -50%
-(2): -25%
-(3): -12.5%
+(1): -75%
+(2): -50%
+(3): -25%
 (4): +25%
 (5): +50%
 (6): +100%
