@@ -55,6 +55,7 @@ const handleGamble = (db: Firestore) =>
 
           const { dice } = await ctx.replyWithDice()
           const diceVal = dice.value.toString()
+          console.log('Dice val: ' + diceVal)
 
           const message = `${ctx.from.first_name} just rolled a beautiful ${diceVal}!`
 

@@ -8,12 +8,13 @@ const handleLeaderboard = (db: Firestore) =>
       const userId = String(ctx.from.id)
 
       const users = await db.collection(chatId).get()
-
       let data = []
 
       users.forEach(doc => {
         data.push(doc.data())
       });
+
+      console.log(data)
 
       data = data.sort((a, b) => b.points - a.points)
 
