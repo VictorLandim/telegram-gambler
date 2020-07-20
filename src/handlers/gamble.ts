@@ -4,15 +4,15 @@ import { Firestore } from '@google-cloud/firestore'
 
 const diceData = {
   1: {
-    mult: 0.25,
+    mult: 0.5,
     text: 'an unfortunate 1️⃣'
   },
   2: {
-    mult: 0.5,
+    mult: 0.75,
     text: 'a sad 2️⃣',
   },
   3: {
-    mult: 0.75,
+    mult: 0.875,
     text: 'an almost good 3️⃣',
   },
   4: {
